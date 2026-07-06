@@ -1,0 +1,28 @@
+---
+// Footer.astro
+---
+
+<footer class="mt-auto w-full border-t border-hairline bg-canvas py-8 text-sm">
+  <div class="mx-auto max-w-(--size-breakpoint-xl) px-6">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <!-- Left side: Standards & Credits -->
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-mute text-xs font-mono">
+        <span>The Standard: 1 Word = 5 Keystrokes (including spaces)</span>
+      </div>
+
+      <!-- Right side: Quick Info and Toggles -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-body text-xs font-sans justify-end">
+        <a href="/about" class="hover:text-ink transition-colors cursor-pointer">About Us</a>
+        <a href="/privacy" class="hover:text-ink transition-colors cursor-pointer">Privacy Policy</a>
+        <a href="/terms" class="hover:text-ink transition-colors cursor-pointer">Terms & Conditions</a>
+        <a href="/contact" class="hover:text-ink transition-colors cursor-pointer">Contact Us</a>
+        <a href="#rules" class="hover:text-ink transition-colors cursor-pointer" onclick="document.dispatchEvent(new CustomEvent('switch-tab', { detail: { tab: 'stats' } }))">Stats Dashboard</a>
+      </div>
+    </div>
+    
+    <div class="mt-6 border-t border-hairline pt-4 flex flex-col sm:flex-row justify-between text-[11px] text-mute">
+      <span>© 2026 typing speed practice. All rights reserved.</span>
+      <span class="mt-1 sm:mt-0">Designed for developers to practice code syntax and words fluidity.</span>
+    </div>
+  </div>
+</footer>

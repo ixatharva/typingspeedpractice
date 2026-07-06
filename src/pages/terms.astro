@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Terms & Conditions - Typing Speed Practice" description="Read our Terms & Conditions to understand the usage rules, site availability statements, and limitations of liability for typing speed practice.">
+  <div class="flex flex-col min-h-screen">
+    <Header />
+    
+    <main class="flex-grow flex items-center justify-center py-12">
+      <div class="w-full max-w-3xl px-6 font-sans">
+        
+        <!-- Section Header -->
+        <div class="border-b border-hairline pb-4 mb-8">
+          <h1 class="text-2xl font-bold tracking-tight text-ink font-sans">Terms & Conditions</h1>
+          <p class="text-xs text-mute font-mono mt-1">LAST UPDATED: JULY 2026</p>
+        </div>
+
+        <!-- Section Content -->
+        <div class="space-y-6 text-xs text-body leading-relaxed">
+          <p class="text-justify">
+            Welcome to <strong>typing speed practice.</strong>. These Terms & Conditions outline the rules and regulations governing the use of our website located at <em>typingspeedpractice.com</em>.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">1. Acceptable Use Policy</h2>
+          <p class="text-justify">
+            By accessing this website, we assume you accept these terms in full. You must not use this website in any way that causes, or may cause, damage to the platform or impairment of the availability or accessibility of the web application. You must not attempt to scrape word lists, reverse engineer script functions, or initiate denial-of-service queries against the host servers.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">2. Intellectual Property Rights</h2>
+          <p class="text-justify">
+            Unless otherwise stated, <strong>typing speed practice.</strong> owns the intellectual property rights for all code syntax layouts, customized vocabularies, UI component mockups, and operational stylesheets on this website. All intellectual property rights are reserved. You may access this material strictly for personal, non-commercial educational training purposes.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">3. Disclaimer and Liability</h2>
+          <p class="text-justify">
+            This platform is provided "as is," without any express or implied representations or warranties of any kind. We do not guarantee that the tool will operate continuously, be error-free, or preserve local stats cache if client browser settings are altered. 
+          </p>
+          <p class="text-justify">
+            In no event shall we be liable for any direct, indirect, special, or consequential damages arising out of the use or inability to use this training tool.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">4. Contact Information</h2>
+          <p class="text-justify">
+            If you have any questions regarding these Terms & Conditions, please contact us via our dedicated contact page.
+          </p>
+        </div>
+
+      </div>
+    </main>
+    
+    <Footer />
+  </div>
+</Layout>

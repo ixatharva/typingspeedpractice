@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy - Typing Speed Practice" description="Read our Privacy Policy to understand how typing speed practice values your privacy. We store all typing statistics locally on your device and do not sell personal data.">
+  <div class="flex flex-col min-h-screen">
+    <Header />
+    
+    <main class="flex-grow flex items-center justify-center py-12">
+      <div class="w-full max-w-3xl px-6 font-sans">
+        
+        <!-- Section Header -->
+        <div class="border-b border-hairline pb-4 mb-8">
+          <h1 class="text-2xl font-bold tracking-tight text-ink font-sans">Privacy Policy</h1>
+          <p class="text-xs text-mute font-mono mt-1">LAST UPDATED: JULY 2026</p>
+        </div>
+
+        <!-- Section Content -->
+        <div class="space-y-6 text-xs text-body leading-relaxed">
+          <p class="text-justify">
+            At <strong>typing speed practice.</strong>, available at <em>typingspeedpractice.com</em>, the privacy of our visitors is one of our primary priorities. This Privacy Policy document outlines the types of information we process and how we protect your rights.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">1. Data Storage and Local Storage</h2>
+          <p class="text-justify">
+            We believe that you should have absolute control over your training records. To support this philosophy, <strong>we do not maintain user databases on external servers</strong>. All of your personal bests, typing accuracy rates, speed logs, and timing history are stored directly inside your web browser using HTML5 <code>localStorage</code> technology. 
+          </p>
+          <p class="text-justify">
+            This means that your data remains on your physical device. If you clear your browser cache, cookies, or local storage data, your test history will be deleted. We cannot recover or restore this data for you.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">2. Cookies and Log Files</h2>
+          <p class="text-justify">
+            Our server logs collect standard network statistics, which include Internet Protocol (IP) addresses, browser variants, Internet Service Providers (ISP), date/time stamps, referring/exit pages, and click paths. This diagnostic metadata is used strictly to analyze page loading speeds, perform software diagnostics, and maintain site stability.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">3. Third-Party Integrations</h2>
+          <p class="text-justify">
+            This site displays empty spaces reserved for optional future ad layouts or tools. These partners may use technologies like cookies, JavaScript, or Web Beacons that run within web advertisements and are sent directly to users' browsers, automatically receiving your IP address in the process. We do not have access to or control over these cookies used by third-party advertisers.
+          </p>
+
+          <h2 class="text-sm font-semibold text-ink font-mono mt-8 uppercase tracking-wide">4. Consent</h2>
+          <p class="text-justify">
+            By utilizing our application, you hereby consent to our Privacy Policy and agree to its terms and configurations.
+          </p>
+        </div>
+
+      </div>
+    </main>
+    
+    <Footer />
+  </div>
+</Layout>

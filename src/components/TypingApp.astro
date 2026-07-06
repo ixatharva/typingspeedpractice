@@ -159,10 +159,9 @@
         </div>
       </div>
 
-      <!-- Typing Canvas Box -->
       <div 
         id="canvas-container" 
-        class="relative min-h-[140px] max-h-[180px] overflow-y-auto no-scrollbar z-10 select-none cursor-text pr-2"
+        class="relative min-h-[140px] max-h-[180px] overflow-hidden no-scrollbar z-10 select-none cursor-text pr-2"
       >
         <!-- Caret (Cursor) -->
         <div id="typing-caret" class="typing-caret"></div>
@@ -796,6 +795,7 @@
   let isTestReady = false; // true when user pressed Enter or clicked overlay to focus
   
   let targetText = '';
+  let lastLineTop = 0;
   let currentIndex = 0;
   let keystrokesCount = 0;
   let correctKeystrokesCount = 0;
@@ -886,6 +886,7 @@
     chartStats = [];
     typingInput.value = '';
     canvasContainer.scrollTop = 0;
+    lastLineTop = 0;
     
     // UI elements update
     resultsContainer.classList.add('hidden');
@@ -1031,12 +1032,15 @@
       // Keep caret active/solid style
       caret.classList.add('typing-active');
       
-      // Auto-scrolling: center the active letter in the canvas container
-      const containerHeight = canvasContainer.clientHeight;
+      // Auto-scrolling: center the active letter in the canvas container when the line changes
       const letterTop = activeLetter.offsetTop;
-      const letterHeight = activeLetter.offsetHeight;
-      const targetScrollTop = letterTop - (containerHeight / 2) + (letterHeight / 2);
-      canvasContainer.scrollTop = Math.max(0, targetScrollTop);
+      if (letterTop !== lastLineTop) {
+        const containerHeight = canvasContainer.clientHeight;
+        const letterHeight = activeLetter.offsetHeight;
+        const targetScrollTop = letterTop - (containerHeight / 2) + (letterHeight / 2);
+        canvasContainer.scrollTop = Math.max(0, targetScrollTop);
+        lastLineTop = letterTop;
+      }
       
       // Clear key indicators
       clearNextKeyIndicator();

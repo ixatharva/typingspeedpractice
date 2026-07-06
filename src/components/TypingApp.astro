@@ -828,6 +828,10 @@
   const hindiTip = document.getElementById('hindi-tip') as HTMLDivElement;
   const startOverlay = document.getElementById('start-overlay') as HTMLDivElement;
 
+  // Prevent manual user scrolling on canvasContainer
+  canvasContainer.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+  canvasContainer.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+
   // Language Dropdown elements
   const langDropdownBtn = document.getElementById('lang-dropdown-btn') as HTMLButtonElement;
   const langDropdownMenu = document.getElementById('lang-dropdown-menu') as HTMLDivElement;
@@ -1032,12 +1036,11 @@
       // Keep caret active/solid style
       caret.classList.add('typing-active');
       
-      // Auto-scrolling: center the active letter in the canvas container when the line changes
+      // Auto-scrolling: keep the active line as the second line in the viewport when the line changes
       const letterTop = activeLetter.offsetTop;
       if (letterTop !== lastLineTop) {
-        const containerHeight = canvasContainer.clientHeight;
-        const letterHeight = activeLetter.offsetHeight;
-        const targetScrollTop = letterTop - (containerHeight / 2) + (letterHeight / 2);
+        const lineHeight = activeLetter.offsetHeight || 36;
+        const targetScrollTop = letterTop - lineHeight;
         canvasContainer.scrollTop = Math.max(0, targetScrollTop);
         lastLineTop = letterTop;
       }

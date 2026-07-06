@@ -817,6 +817,7 @@
   // DOM Elements cache
   const typingInput = document.getElementById('typing-input') as HTMLInputElement;
   const wordsWrapper = document.getElementById('words-wrapper') as HTMLDivElement;
+  const canvasContainer = document.getElementById('canvas-container') as HTMLDivElement;
   const caret = document.getElementById('typing-caret') as HTMLDivElement;
   const liveTimer = document.getElementById('live-timer') as HTMLDivElement;
   const liveWpm = document.getElementById('live-wpm') as HTMLSpanElement;
@@ -884,6 +885,7 @@
     secondsElapsed = 0;
     chartStats = [];
     typingInput.value = '';
+    canvasContainer.scrollTop = 0;
     
     // UI elements update
     resultsContainer.classList.add('hidden');
@@ -1028,6 +1030,13 @@
       
       // Keep caret active/solid style
       caret.classList.add('typing-active');
+      
+      // Auto-scrolling: center the active letter in the canvas container
+      const containerHeight = canvasContainer.clientHeight;
+      const letterTop = activeLetter.offsetTop;
+      const letterHeight = activeLetter.offsetHeight;
+      const targetScrollTop = letterTop - (containerHeight / 2) + (letterHeight / 2);
+      canvasContainer.scrollTop = Math.max(0, targetScrollTop);
       
       // Clear key indicators
       clearNextKeyIndicator();

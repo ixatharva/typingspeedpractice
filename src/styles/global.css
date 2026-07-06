@@ -244,3 +244,8 @@ summary::-webkit-details-marker {
 summary {
   list-style: none;
 }
+
+/* Force Hindi tip color to white when dark mode is enabled */
+:root.dark #hindi-tip {
+  color: #ffffff;
+}

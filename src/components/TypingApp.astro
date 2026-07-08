@@ -70,6 +70,7 @@
               >
                 <button data-option-lang="english" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer bg-canvas-soft-2 font-semibold">english</button>
                 <button data-option-lang="hindi" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">hindi</button>
+                <button data-option-lang="sanskrit" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">sanskrit</button>
                 <button data-option-lang="spanish" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">spanish</button>
                 <button data-option-lang="french" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">french</button>
               </div>
@@ -787,7 +788,7 @@
 
   // State Management
   let currentMode = 'time'; // 'time' | 'words' | 'code'
-  let currentProseLanguage = 'english'; // 'english' | 'hindi' | 'spanish' | 'french'
+  let currentProseLanguage = 'english'; // 'english' | 'hindi' | 'sanskrit' | 'spanish' | 'french'
   let currentTimeLimit = 60; // seconds
   let currentWordsCount = 25; // count
   let currentLanguage = 'javascript'; // for code mode
@@ -938,7 +939,8 @@
 
   function generateTargetText() {
     if (currentMode === 'time' || currentMode === 'words') {
-      const dictionary = multilingualWords[currentProseLanguage as keyof typeof multilingualWords] || multilingualWords.english;
+      const data = multilingualWords[currentProseLanguage as keyof typeof multilingualWords] || multilingualWords.english;
+      const dictionary = Array.isArray(data) ? data : (data.words || []);
       const count = currentMode === 'time' ? 100 : currentWordsCount; // generate plenty of words for time mode
       const selectedWords = [];
       for (let i = 0; i < count; i++) {

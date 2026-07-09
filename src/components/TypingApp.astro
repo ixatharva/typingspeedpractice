@@ -18,9 +18,19 @@
         <!-- 1. Mode Specific Sub-options (First) -->
         <div id="sub-options-time" class="flex items-center border-r border-hairline pr-3 mr-1 gap-1">
           <span class="text-mute mr-1">time:</span>
-          <button data-option-time="60" class="opt-btn active px-2 py-0.5 rounded-sm bg-canvas-soft-2 text-ink font-semibold cursor-pointer">1min</button>
-          <button data-option-time="180" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">3min</button>
-          <button data-option-time="300" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">5min</button>
+          <button data-option-time="15" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">15s</button>
+          <button data-option-time="30" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">30s</button>
+          <button data-option-time="60" class="opt-btn active px-2 py-0.5 rounded-sm bg-canvas-soft-2 text-ink font-semibold cursor-pointer">60s</button>
+          <button data-option-time="120" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">120s</button>
+          <button id="custom-time-btn" class="opt-btn px-2 py-0.5 rounded-sm hover:bg-canvas-soft hover:text-ink cursor-pointer">custom</button>
+          <input 
+            type="number" 
+            id="custom-time-input" 
+            class="hidden w-12 border border-hairline rounded-sm bg-canvas px-1.5 py-0.5 text-center font-mono text-xs text-ink focus:outline-hidden"
+            min="5" 
+            max="3600" 
+            placeholder="sec"
+          />
         </div>
 
         <div id="sub-options-words" class="hidden flex items-center border-r border-hairline pr-3 mr-1 gap-1">
@@ -828,6 +838,8 @@
   const keyboardContainer = document.getElementById('keyboard-container') as HTMLDivElement;
   const hindiTip = document.getElementById('hindi-tip') as HTMLDivElement;
   const startOverlay = document.getElementById('start-overlay') as HTMLDivElement;
+  const customTimeBtn = document.getElementById('custom-time-btn') as HTMLButtonElement;
+  const customTimeInput = document.getElementById('custom-time-input') as HTMLInputElement;
 
   // Prevent manual user scrolling on canvasContainer
   canvasContainer.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
@@ -1272,7 +1284,6 @@
     secondsElapsed = 0;
     
     // Fade out navigation controls for clean focus
-    document.querySelector('header')?.classList.add('opacity-10', 'transition-opacity', 'duration-500');
     document.querySelector('footer')?.classList.add('opacity-10', 'transition-opacity', 'duration-500');
 
     timerInterval = setInterval(() => {
@@ -1312,7 +1323,6 @@
     isTestFinished = true;
     
     // Restore layout transparency
-    document.querySelector('header')?.classList.remove('opacity-10');
     document.querySelector('footer')?.classList.remove('opacity-10');
     
     // Make sure we have at least one data point
@@ -1646,6 +1656,21 @@
       
       if (timeOpt) {
         currentTimeLimit = Number(timeOpt);
+        customTimeInput.classList.add('hidden');
+      }
+
+      if (btn === customTimeBtn) {
+        customTimeInput.classList.remove('hidden');
+        customTimeInput.focus();
+        if (customTimeInput.value) {
+          const val = Number(customTimeInput.value);
+          if (val >= 5 && val <= 3600) {
+            currentTimeLimit = val;
+          }
+        } else {
+          customTimeInput.value = '30';
+          currentTimeLimit = 30;
+        }
       }
       
       if (wordsOpt) {
@@ -1659,6 +1684,35 @@
       // Reinitialize test
       initTest();
     });
+  });
+
+  // Handle custom time numeric input
+  customTimeInput?.addEventListener('input', () => {
+    const val = Number(customTimeInput.value);
+    if (val >= 5 && val <= 3600) {
+      currentTimeLimit = val;
+      liveTimer.innerText = String(val);
+    }
+  });
+
+  customTimeInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      customTimeInput.blur();
+    }
+  });
+
+  customTimeInput?.addEventListener('blur', () => {
+    let val = Number(customTimeInput.value);
+    if (!val || val < 5) {
+      val = 15;
+      customTimeInput.value = '15';
+    } else if (val > 3600) {
+      val = 3600;
+      customTimeInput.value = '3600';
+    }
+    currentTimeLimit = val;
+    initTest();
   });
 
   // Language Dropdown toggles

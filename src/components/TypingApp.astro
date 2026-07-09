@@ -801,6 +801,140 @@
     ' ': 'key-space'
   };
 
+  // Hindi InScript mapping constants
+  const INSCRIPT_MAP: Record<string, { normal: string; shift: string }> = {
+    Backquote: { normal: 'ॊ', shift: 'ऒ' },
+    Digit1: { normal: '१', shift: 'ऍ' },
+    Digit2: { normal: '२', shift: 'ॅ' },
+    Digit3: { normal: '३', shift: '्र' },
+    Digit4: { normal: '४', shift: 'र्' },
+    Digit5: { normal: '५', shift: 'ज्ञ' },
+    Digit6: { normal: '६', shift: 'त्र' },
+    Digit7: { normal: '७', shift: 'क्ष' },
+    Digit8: { normal: '८', shift: 'श्र' },
+    Digit9: { normal: '९', shift: '(' },
+    Digit0: { normal: '०', shift: ')' },
+    Minus: { normal: '-', shift: 'ः' },
+    Equal: { normal: 'ृ', shift: 'ऋ' },
+    KeyQ: { normal: 'ौ', shift: 'औ' },
+    KeyW: { normal: 'ै', shift: 'ऐ' },
+    KeyE: { normal: 'ा', shift: 'आ' },
+    KeyR: { normal: 'ी', shift: 'ई' },
+    KeyT: { normal: 'ू', shift: 'ऊ' },
+    KeyY: { normal: 'ब', shift: 'भ' },
+    KeyU: { normal: 'ह', shift: 'ङ' },
+    KeyI: { normal: 'ग', shift: 'घ' },
+    KeyO: { normal: 'द', shift: 'ध' },
+    KeyP: { normal: 'ज', shift: 'झ' },
+    BracketLeft: { normal: 'ड', shift: 'ढ' },
+    BracketRight: { normal: '़', shift: 'ञ' },
+    Backslash: { normal: 'ॉ', shift: 'ऑ' },
+    KeyA: { normal: 'ो', shift: 'ओ' },
+    KeyS: { normal: 'े', shift: 'ए' },
+    KeyD: { normal: '्', shift: 'अ' },
+    KeyF: { normal: 'ि', shift: 'इ' },
+    KeyG: { normal: 'ु', shift: 'उ' },
+    KeyH: { normal: 'प', shift: 'फ' },
+    KeyJ: { normal: 'र', shift: 'ऱ' },
+    KeyK: { normal: 'क', shift: 'ख' },
+    KeyL: { normal: 'त', shift: 'थ' },
+    Semicolon: { normal: 'च', shift: 'छ' },
+    Quote: { normal: 'ट', shift: 'ठ' },
+    KeyZ: { normal: 'ॆ', shift: 'ऎ' },
+    KeyX: { normal: 'ं', shift: 'ँ' },
+    KeyC: { normal: 'म', shift: 'ण' },
+    KeyV: { normal: 'न', shift: 'ऩ' },
+    KeyB: { normal: 'व', shift: 'ऴ' },
+    KeyN: { normal: 'ल', shift: 'ळ' },
+    KeyM: { normal: 'स', shift: 'श' },
+    Comma: { normal: ',', shift: 'ष' },
+    Period: { normal: '.', shift: '।' },
+    Slash: { normal: 'य', shift: 'य़' }
+  };
+
+  const QWERTY_LABELS: Record<string, string> = {
+    Backquote: '`', Digit1: '1', Digit2: '2', Digit3: '3', Digit4: '4', Digit5: '5', Digit6: '6', Digit7: '7', Digit8: '8', Digit9: '9', Digit0: '0', Minus: '-', Equal: '=',
+    KeyQ: 'q', KeyW: 'w', KeyE: 'e', KeyR: 'r', KeyT: 't', KeyY: 'y', KeyU: 'u', KeyI: 'i', KeyO: 'o', KeyP: 'p', BracketLeft: '[', BracketRight: ']', Backslash: '\\',
+    KeyA: 'a', KeyS: 's', KeyD: 'd', KeyF: 'f', KeyG: 'g', KeyH: 'h', KeyJ: 'j', KeyK: 'k', KeyL: 'l', Semicolon: ';', Quote: "'",
+    KeyZ: 'z', KeyX: 'x', KeyC: 'c', KeyV: 'v', KeyB: 'b', KeyN: 'n', KeyM: 'm', Comma: ',', Period: '.', Slash: '/'
+  };
+
+  const CODE_TO_KEY_ID: Record<string, string> = {
+    Backquote: 'key-backquote',
+    Digit1: 'key-1',
+    Digit2: 'key-2',
+    Digit3: 'key-3',
+    Digit4: 'key-4',
+    Digit5: 'key-5',
+    Digit6: 'key-6',
+    Digit7: 'key-7',
+    Digit8: 'key-8',
+    Digit9: 'key-9',
+    Digit0: 'key-0',
+    Minus: 'key-minus',
+    Equal: 'key-equal',
+    KeyQ: 'key-q',
+    KeyW: 'key-w',
+    KeyE: 'key-e',
+    KeyR: 'key-r',
+    KeyT: 'key-t',
+    KeyY: 'key-y',
+    KeyU: 'key-u',
+    KeyI: 'key-i',
+    KeyO: 'key-o',
+    KeyP: 'key-p',
+    BracketLeft: 'key-bracketleft',
+    BracketRight: 'key-bracketright',
+    Backslash: 'key-backslash',
+    CapsLock: 'key-capslock',
+    KeyA: 'key-a',
+    KeyS: 'key-s',
+    KeyD: 'key-d',
+    KeyF: 'key-f',
+    KeyG: 'key-g',
+    KeyH: 'key-h',
+    KeyJ: 'key-j',
+    KeyK: 'key-k',
+    KeyL: 'key-l',
+    Semicolon: 'key-semicolon',
+    Quote: 'key-quote',
+    Enter: 'key-enter',
+    ShiftLeft: 'key-shiftleft',
+    KeyZ: 'key-z',
+    KeyX: 'key-x',
+    KeyC: 'key-c',
+    KeyV: 'key-v',
+    KeyB: 'key-b',
+    KeyN: 'key-n',
+    KeyM: 'key-m',
+    Comma: 'key-comma',
+    Period: 'key-period',
+    Slash: 'key-slash',
+    ShiftRight: 'key-shiftright',
+    Space: 'key-space',
+    Tab: 'key-tab'
+  };
+
+  let isShiftActive = false;
+
+  function updateVirtualKeyboard() {
+    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    
+    for (const [code, keyId] of Object.entries(CODE_TO_KEY_ID)) {
+      const elem = document.getElementById(keyId);
+      if (!elem) continue;
+      
+      if (code in INSCRIPT_MAP) {
+        if (isHindiMode) {
+          const map = INSCRIPT_MAP[code];
+          elem.innerText = isShiftActive ? map.shift : map.normal;
+        } else {
+          elem.innerText = QWERTY_LABELS[code];
+        }
+      }
+    }
+  }
+
   // State Management
   let currentMode = 'time'; // 'time' | 'words' | 'code'
   let currentProseLanguage = 'english'; // 'english' | 'hindi' | 'sanskrit' | 'spanish' | 'french'
@@ -952,6 +1086,8 @@
     }, 50);
 
     // Highlight initial correct key
+    isShiftActive = false;
+    updateVirtualKeyboard();
     highlightNextCorrectKey();
   }
 
@@ -1092,19 +1228,33 @@
     }
   }
 
-  // Next expected key indicator on the virtual keyboard (For Hindi, keys fall back or match IME)
+  // Next expected key indicator on the virtual keyboard (For Hindi, keys fall back or match InScript)
   function highlightNextCorrectKey() {
     const activeLetter = letterSpans[currentIndex];
     if (!activeLetter) return;
     
-    let keyChar = activeLetter.innerText.toLowerCase();
+    let keyChar = activeLetter.innerText;
     if (activeLetter.innerHTML === '&nbsp;') {
       keyChar = ' ';
     }
     
-    const keyId = KEY_MAP[keyChar];
-    if (keyId) {
-      const keyElem = document.getElementById(keyId);
+    let targetKeyId = null;
+    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    
+    if (isHindiMode) {
+      // Find key code in INSCRIPT_MAP
+      for (const [code, map] of Object.entries(INSCRIPT_MAP)) {
+        if (map.normal === keyChar || map.shift === keyChar) {
+          targetKeyId = CODE_TO_KEY_ID[code];
+          break;
+        }
+      }
+    } else {
+      targetKeyId = KEY_MAP[keyChar.toLowerCase()];
+    }
+    
+    if (targetKeyId) {
+      const keyElem = document.getElementById(targetKeyId);
       if (keyElem) {
         keyElem.classList.add('border-link', 'text-link', 'bg-link/5');
       }
@@ -1181,8 +1331,8 @@
       capslockWarning.classList.remove('flex');
     }
 
-    // Virtual keyboard button press indicator
-    const pressedKeyId = KEY_MAP[e.key.toLowerCase()];
+    // Virtual keyboard button press indicator using physical code
+    const pressedKeyId = CODE_TO_KEY_ID[e.code];
     if (pressedKeyId) {
       const keyElem = document.getElementById(pressedKeyId);
       if (keyElem) {
@@ -1192,6 +1342,8 @@
 
     // Shift Key indicator highlights shiftleft/shiftright keys
     if (e.key === 'Shift') {
+      isShiftActive = true;
+      updateVirtualKeyboard();
       const side = e.location === 1 ? 'key-shiftleft' : 'key-shiftright';
       const keyElem = document.getElementById(side);
       if (keyElem) {
@@ -1278,8 +1430,8 @@
   }
 
   function handleKeyUp(e: KeyboardEvent) {
-    // Clear pressed key background
-    const pressedKeyId = KEY_MAP[e.key.toLowerCase()];
+    // Clear pressed key background using physical code
+    const pressedKeyId = CODE_TO_KEY_ID[e.code];
     if (pressedKeyId) {
       const keyElem = document.getElementById(pressedKeyId);
       if (keyElem) {
@@ -1288,6 +1440,8 @@
     }
     
     if (e.key === 'Shift') {
+      isShiftActive = false;
+      updateVirtualKeyboard();
       document.getElementById('key-shiftleft')?.classList.remove('bg-primary', 'text-on-primary', 'border-primary');
       document.getElementById('key-shiftright')?.classList.remove('bg-primary', 'text-on-primary', 'border-primary');
     }

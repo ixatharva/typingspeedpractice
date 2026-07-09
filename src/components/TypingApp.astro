@@ -1033,20 +1033,27 @@
     letterSpans = wordsWrapper.querySelectorAll('.letter');
     
     // Position initial caret position
-    setTimeout(updateCaret, 20);
+    setTimeout(updateCaretPosition, 20);
   }
 
-  function updateCaret() {
+  function updateCaretPosition() {
     if (isTestFinished) return;
     const activeLetter = letterSpans[currentIndex];
     
     if (activeLetter) {
       caret.style.display = 'block';
       
-      // Calculate top/left matching letter coordinates
-      caret.style.left = `${activeLetter.offsetLeft}px`;
-      caret.style.top = `${activeLetter.offsetTop}px`;
-      caret.style.height = `${activeLetter.offsetHeight}px`;
+      // Calculate coordinates using getBoundingClientRect
+      const parentRect = canvasContainer.getBoundingClientRect();
+      const letterRect = activeLetter.getBoundingClientRect();
+      
+      // Calculate relative position within the scrollable canvas container
+      const left = letterRect.left - parentRect.left + canvasContainer.scrollLeft;
+      const top = letterRect.top - parentRect.top + canvasContainer.scrollTop;
+      
+      caret.style.left = `${left}px`;
+      caret.style.top = `${top}px`;
+      caret.style.height = `${letterRect.height}px`;
       
       // Keep caret active/solid style
       caret.classList.add('typing-active');
@@ -1067,8 +1074,13 @@
       // caret reaches end of text
       const lastLetter = letterSpans[letterSpans.length - 1];
       if (lastLetter) {
-        caret.style.left = `${lastLetter.offsetLeft + lastLetter.offsetWidth}px`;
-        caret.style.top = `${lastLetter.offsetTop}px`;
+        const parentRect = canvasContainer.getBoundingClientRect();
+        const letterRect = lastLetter.getBoundingClientRect();
+        const left = letterRect.right - parentRect.left + canvasContainer.scrollLeft;
+        const top = letterRect.top - parentRect.top + canvasContainer.scrollTop;
+        
+        caret.style.left = `${left}px`;
+        caret.style.top = `${top}px`;
       }
       clearNextKeyIndicator();
     }
@@ -1121,7 +1133,7 @@
     startOverlay.classList.add('hidden');
     wordsWrapper.classList.remove('blur-sm');
     caret.style.display = 'block';
-    updateCaret();
+    updateCaretPosition();
     typingInput.focus();
   }
 
@@ -1196,7 +1208,7 @@
           correctKeystrokesCount--;
         }
         
-        updateCaret();
+        updateCaretPosition();
         recalculateMetrics();
       }
       return;
@@ -1249,7 +1261,7 @@
         }
       }
 
-      updateCaret();
+      updateCaretPosition();
       recalculateMetrics();
       
       // If we finished all letters in words mode or code mode, trigger end

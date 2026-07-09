@@ -74,6 +74,7 @@ body {
   animation: caret-blink 1s step-end infinite;
   pointer-events: none;
   z-index: 10;
+  transition: left 0.1s ease-out, top 0.1s ease-out;
 }
 
 @keyframes caret-blink {

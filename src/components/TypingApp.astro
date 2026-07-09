@@ -1091,6 +1091,23 @@
     } else {
       keyboardContainer.classList.remove('shift-active');
     }
+
+    // Dynamic legend layout switcher
+    for (const [code, keyId] of Object.entries(CODE_TO_KEY_ID)) {
+      const elem = document.getElementById(keyId);
+      if (!elem) continue;
+
+      if (code in INSCRIPT_MAP) {
+        const map = INSCRIPT_MAP[code];
+        if (isHindiMode) {
+          elem.innerHTML = `<span class="legend-shift">${map.shift}</span><span class="legend-normal">${map.normal}</span>`;
+        } else {
+          const qwertyLabel = QWERTY_LABELS[code];
+          const displayChar = isShiftActive ? qwertyLabel.toUpperCase() : qwertyLabel.toLowerCase();
+          elem.innerHTML = `<span class="legend-english">${displayChar}</span>`;
+        }
+      }
+    }
   }
 
   // State Management
@@ -1242,13 +1259,8 @@
       hindiTip.classList.remove('flex');
     }
 
-    // Auto show/hide virtual keyboard based on active language
-    const isHindiOrSanskrit = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
-    if (isHindiOrSanskrit) {
-      keyboardContainer.classList.remove('hidden');
-    } else {
-      keyboardContainer.classList.add('hidden');
-    }
+    // Auto show virtual keyboard based on active language
+    keyboardContainer.classList.remove('hidden');
 
     // Autofocus input so they can press Enter immediately
     setTimeout(() => {
@@ -2293,5 +2305,17 @@
     border-bottom-width: 1px !important;
     transform: translateY(2px) !important;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.06) !important;
+  }
+
+  .keycap .legend-english {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    width: 100% !important;
+    text-align: center !important;
   }
 </style>

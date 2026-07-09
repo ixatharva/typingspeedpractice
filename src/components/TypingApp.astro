@@ -955,6 +955,8 @@
   let isTestFinished = false;
   let secondsElapsed = 0;
   let testDuration = 0;
+  let lastValue = '';
+  let isComposing = false;
   
   // Real-time second-by-second analytics tracking
   interface ChartDataPoint {
@@ -1041,6 +1043,8 @@
     secondsElapsed = 0;
     chartStats = [];
     typingInput.value = '';
+    lastValue = '';
+    isComposing = false;
     canvasContainer.scrollTop = 0;
     lastLineTop = 0;
     
@@ -1305,8 +1309,8 @@
       return;
     }
     
-    // Prevent standard scroll keys when focused
-    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Tab"].includes(e.code) && document.activeElement === typingInput) {
+    // Prevent standard cursor keys and tab to avoid caret jumping/losing focus
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End", "Tab"].includes(e.key) && document.activeElement === typingInput) {
       e.preventDefault();
     }
 
@@ -1351,80 +1355,26 @@
       }
     }
 
-    // Main text input logic
-    if (e.key === 'Backspace') {
-      if (currentIndex > 0) {
-        currentIndex--;
-        const currentLetter = letterSpans[currentIndex];
-        
-        // Update states back to untyped
-        currentLetter.classList.remove('correct', 'incorrect', 'extra');
-        currentLetter.classList.add('untyped');
-        
-        // Recalculate keystrokes
-        if (correctKeystrokesCount > 0 && currentLetter.dataset.wasCorrect === 'true') {
-          correctKeystrokesCount--;
-        }
-        
-        updateCaretPosition();
-        recalculateMetrics();
-      }
-      return;
-    }
-
-    // We process characters (letters, spaces, special syntax)
-    if (e.key.length === 1) {
-      // Start test timer on first typing stroke
-      if (!isTestRunning) {
-        startTestTimer();
-      }
-
-      keystrokesCount++;
-      const currentLetter = letterSpans[currentIndex];
+    // Emulate Hindi InScript keyboard if typing with normal English keyboard settings
+    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    if (isHindiMode && e.key !== 'Process') {
+      // Pass standard modifier shortcuts and special keys
+      if (e.ctrlKey || e.altKey || e.metaKey || e.key.length > 1) return;
       
-      if (!currentLetter) return;
-
-      let expectedChar = currentLetter.innerText;
-      // Convert NBSP representation
-      if (currentLetter.innerHTML === '&nbsp;') {
-        expectedChar = ' ';
-      }
-      
-      const typedChar = e.key;
-
-      if (typedChar === expectedChar) {
-        // Correct Input
-        currentLetter.classList.remove('untyped', 'incorrect');
-        currentLetter.classList.add('correct');
-        currentLetter.dataset.wasCorrect = 'true';
-        correctKeystrokesCount++;
-        currentIndex++;
-      } else {
-        // Incorrect Input (Friction / Error)
-        incorrectKeystrokesCount++;
-        currentLetter.classList.remove('untyped');
-        currentLetter.classList.add('incorrect');
-        currentLetter.dataset.wasCorrect = 'false';
-
-        // Error handling behavior
-        if (isStrictErrorMode) {
-          // Strict: stop cursor forward progress, highlight red
-          // We do not increment currentIndex. Caret stays at current letter!
-          // Soft screen shake feedback
-          wordsWrapper.classList.add('animate-shake');
-          setTimeout(() => wordsWrapper.classList.remove('animate-shake'), 150);
-        } else {
-          // Free mode: highlight red but continue
-          currentIndex++;
-        }
-      }
-
-      updateCaretPosition();
-      recalculateMetrics();
-      
-      // If we finished all letters in words mode or code mode, trigger end
-      if (currentIndex >= letterSpans.length) {
-        finishTest();
+      const mapping = INSCRIPT_MAP[e.code];
+      if (mapping) {
+        e.preventDefault();
+        const mappedChar = e.shiftKey ? mapping.shift : mapping.normal;
+        
+        const start = typingInput.selectionStart || 0;
+        const end = typingInput.selectionEnd || 0;
+        const val = typingInput.value;
+        typingInput.value = val.slice(0, start) + mappedChar + val.slice(end);
+        
+        typingInput.selectionStart = typingInput.selectionEnd = start + mappedChar.length;
+        
+        const inputEvent = new Event('input', { bubbles: true });
+        typingInput.dispatchEvent(inputEvent);
       }
     }
   }
@@ -1448,6 +1398,110 @@
 
     // Caret blink resumes on inactivity
     caret.classList.remove('typing-active');
+  }
+
+  // Unified Input Validation & State Sync
+  function syncInput() {
+    if (isTestFinished) return;
+    if (isComposing) return;
+
+    const V = typingInput.value;
+    const lastV = lastValue;
+
+    if (V === lastV) return;
+
+    // Start test timer on first typing stroke
+    if (!isTestRunning && V.length > 0) {
+      startTestTimer();
+    }
+
+    if (V.length > lastV.length) {
+      // Character(s) added
+      const addedText = V.slice(lastV.length);
+      const addedLength = addedText.length;
+
+      keystrokesCount += addedLength;
+
+      let hasError = false;
+      let firstErrorIdx = -1;
+
+      for (let i = 0; i < addedLength; i++) {
+        const charIdx = lastV.length + i;
+        if (charIdx >= targetText.length) break;
+
+        const typedChar = addedText[i];
+        const expectedChar = targetText[charIdx];
+
+        if (typedChar === expectedChar) {
+          correctKeystrokesCount++;
+        } else {
+          incorrectKeystrokesCount++;
+          if (!hasError) {
+            hasError = true;
+            firstErrorIdx = charIdx;
+          }
+        }
+      }
+
+      if (hasError && isStrictErrorMode) {
+        // Strict Mode Error Handling: play shake, block progress
+        wordsWrapper.classList.add('animate-shake');
+        setTimeout(() => wordsWrapper.classList.remove('animate-shake'), 150);
+
+        const correctPrefix = V.slice(0, firstErrorIdx);
+        typingInput.value = correctPrefix;
+        lastValue = correctPrefix;
+        currentIndex = correctPrefix.length;
+        
+        updateUISpans(firstErrorIdx);
+      } else {
+        // Free Mode (or correct text in Strict Mode)
+        lastValue = V;
+        currentIndex = V.length;
+        updateUISpans();
+      }
+    } else {
+      // Backspace (Characters deleted)
+      lastValue = V;
+      currentIndex = V.length;
+      updateUISpans();
+    }
+
+    updateCaretPosition();
+    recalculateMetrics();
+
+    // End test if all characters typed
+    if (currentIndex >= targetText.length) {
+      finishTest();
+    }
+  }
+
+  function updateUISpans(strictErrorIdx = -1) {
+    const V = lastValue;
+
+    for (let i = 0; i < letterSpans.length; i++) {
+      const span = letterSpans[i];
+      if (!span) continue;
+
+      if (i < V.length) {
+        const typedChar = V[i];
+        const expectedChar = targetText[i];
+        
+        if (typedChar === expectedChar) {
+          span.className = 'letter correct';
+          span.dataset.wasCorrect = 'true';
+        } else {
+          span.className = 'letter incorrect';
+          span.dataset.wasCorrect = 'false';
+        }
+      } else if (i === strictErrorIdx) {
+        span.className = 'letter incorrect';
+        span.dataset.wasCorrect = 'false';
+      } else {
+        span.className = 'letter untyped';
+        span.removeAttribute('data-was-correct');
+      }
+    }
   }
 
   // Timer functions
@@ -1671,6 +1725,14 @@
   // Interactivity Actions listeners
   typingInput.addEventListener('keydown', handleKeyDown);
   typingInput.addEventListener('keyup', handleKeyUp);
+  typingInput.addEventListener('input', syncInput);
+  typingInput.addEventListener('compositionstart', () => {
+    isComposing = true;
+  });
+  typingInput.addEventListener('compositionend', () => {
+    isComposing = false;
+    syncInput();
+  });
   
   startOverlay.addEventListener('click', () => {
     startTestFocus();

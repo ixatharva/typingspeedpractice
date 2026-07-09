@@ -13,7 +13,7 @@
       <div class="flex-1 w-full max-w-[850px] space-y-8">
     
     <!-- Test Options Bar (Vercel stark panel style) -->
-    <div class="flex flex-wrap items-center justify-between gap-4 rounded-sm border border-hairline bg-canvas p-3 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-colors">
+    <div class="flex flex-wrap items-center justify-between gap-4 rounded-sm border border-hairline bg-canvas p-3 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-colors distraction">
       <div class="flex items-center flex-wrap gap-x-4 gap-y-2 text-xs font-mono text-body">
         <!-- 1. Mode Specific Sub-options (First) -->
         <div id="sub-options-time" class="flex items-center border-r border-hairline pr-3 mr-1 gap-1">
@@ -207,7 +207,7 @@
       </div>
 
       <!-- Quick Reset Button -->
-      <div class="relative flex justify-center mt-6 z-10">
+      <div class="relative flex justify-center mt-6 z-10 distraction">
         <button 
           id="reset-btn"
           title="Restart Test (Esc)"
@@ -218,10 +218,15 @@
           </svg>
         </button>
       </div>
+
+      <!-- Tiny restart instruction (visible in focus mode) -->
+      <div id="restart-instruction" class="text-center font-mono text-[10px] text-mute select-none mt-3 pointer-events-none opacity-0 transition-opacity duration-300">
+        press <kbd class="px-1.5 py-0.5 rounded-sm border border-hairline bg-canvas-soft-2 font-bold text-ink">Esc</kbd> to restart
+      </div>
     </div>
 
     <!-- Quick Page Links (Outside and below the typing box) -->
-    <div class="flex justify-center items-center gap-4 mt-4 text-[10px] font-mono uppercase tracking-wider text-mute z-10 relative">
+    <div class="flex justify-center items-center gap-4 mt-4 text-[10px] font-mono uppercase tracking-wider text-mute z-10 relative distraction">
       <a href="/about" class="hover:text-ink transition-all">About Us</a>
       <span class="text-hairline select-none">|</span>
       <a href="/privacy" class="hover:text-ink transition-all">Privacy Policy</a>
@@ -906,6 +911,7 @@
     lastLineTop = 0;
     
     // UI elements update
+    document.body.classList.remove('test-active');
     resultsContainer.classList.add('hidden');
     timeEndedModal.classList.add('hidden');
     liveWpm.innerText = '0';
@@ -1296,7 +1302,7 @@
     secondsElapsed = 0;
     
     // Fade out navigation controls for clean focus
-    document.querySelector('footer')?.classList.add('opacity-10', 'transition-opacity', 'duration-500');
+    document.body.classList.add('test-active');
 
     timerInterval = setInterval(() => {
       secondsElapsed++;
@@ -1335,7 +1341,7 @@
     isTestFinished = true;
     
     // Restore layout transparency
-    document.querySelector('footer')?.classList.remove('opacity-10');
+    document.body.classList.remove('test-active');
     
     // Make sure we have at least one data point
     if (chartStats.length === 0) {

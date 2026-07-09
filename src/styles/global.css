@@ -250,3 +250,20 @@ summary {
 :root.dark #hindi-tip {
   color: #ffffff;
 }
+
+/* Focus Mode / Test Active Styles */
+.distraction,
+.nav-menu {
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+body.test-active .distraction,
+body.test-active .nav-menu {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+body.test-active #restart-instruction {
+  opacity: 1 !important;
+}

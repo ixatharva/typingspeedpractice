@@ -237,6 +237,7 @@
     </div>
 
     <!-- Virtual Keyboard Card -->
+    <!-- Virtual Keyboard Card -->
     <div id="keyboard-container" class="hidden rounded-lg border border-hairline bg-canvas p-6 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all">
       <div class="flex items-center justify-between mb-4">
         <span class="font-mono text-[10px] text-mute uppercase tracking-wider">virtual keyboard map</span>
@@ -246,84 +247,240 @@
         </div>
       </div>
 
-      <!-- The QWERTY Layout -->
-      <div class="grid gap-1.5 max-w-2xl mx-auto font-mono text-xs select-none">
+      <!-- The InScript Double-Legend Layout -->
+      <div class="grid gap-1.5 max-w-4xl mx-auto font-mono text-xs select-none">
         <!-- Row 1 -->
-        <div class="flex justify-between gap-1.5 w-full">
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-backquote">`</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-1">1</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-2">2</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-3">3</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-4">4</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-5">5</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-6">6</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-7">7</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-8">8</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-9">9</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-0">0</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-minus">-</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full grow" id="key-equal">=</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-14 text-[10px]" id="key-backspace">backspace</div>
+        <div class="keyboard-row">
+          <div class="key keycap" id="key-backquote">
+            <span class="legend-shift">ओ</span>
+            <span class="legend-normal">ॊ</span>
+          </div>
+          <div class="key keycap" id="key-1">
+            <span class="legend-shift">ऍ</span>
+            <span class="legend-normal">१</span>
+          </div>
+          <div class="key keycap" id="key-2">
+            <span class="legend-shift">ॅ</span>
+            <span class="legend-normal">२</span>
+          </div>
+          <div class="key keycap" id="key-3">
+            <span class="legend-shift">्र</span>
+            <span class="legend-normal">३</span>
+          </div>
+          <div class="key keycap" id="key-4">
+            <span class="legend-shift">र्</span>
+            <span class="legend-normal">४</span>
+          </div>
+          <div class="key keycap" id="key-5">
+            <span class="legend-shift">ज्ञ</span>
+            <span class="legend-normal">५</span>
+          </div>
+          <div class="key keycap" id="key-6">
+            <span class="legend-shift">त्र</span>
+            <span class="legend-normal">६</span>
+          </div>
+          <div class="key keycap" id="key-7">
+            <span class="legend-shift">क्ष</span>
+            <span class="legend-normal">७</span>
+          </div>
+          <div class="key keycap" id="key-8">
+            <span class="legend-shift">श्र</span>
+            <span class="legend-normal">८</span>
+          </div>
+          <div class="key keycap" id="key-9">
+            <span class="legend-shift">(</span>
+            <span class="legend-normal">९</span>
+          </div>
+          <div class="key keycap" id="key-0">
+            <span class="legend-shift">)</span>
+            <span class="legend-normal">०</span>
+          </div>
+          <div class="key keycap" id="key-minus">
+            <span class="legend-shift">ः</span>
+            <span class="legend-normal">-</span>
+          </div>
+          <div class="key keycap" id="key-equal">
+            <span class="legend-shift">ऋ</span>
+            <span class="legend-normal">ृ</span>
+          </div>
+          <div class="key keycap key-backspace key-special" id="key-backspace">
+            <span>← Backspace</span>
+          </div>
         </div>
 
         <!-- Row 2 -->
-        <div class="flex justify-between gap-1.5 w-full">
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-12 text-[10px]" id="key-tab">tab</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-q">q</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-w">w</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-e">e</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-r">r</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-t">t</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-y">y</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-u">u</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-i">i</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-o">o</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-p">p</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-bracketleft">[</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-bracketright">]</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-10" id="key-backslash">\</div>
+        <div class="keyboard-row">
+          <div class="key keycap key-tab key-special" id="key-tab">
+            <span>Tab ⇆</span>
+          </div>
+          <div class="key keycap" id="key-q">
+            <span class="legend-shift">औ</span>
+            <span class="legend-normal">ौ</span>
+          </div>
+          <div class="key keycap" id="key-w">
+            <span class="legend-shift">ऐ</span>
+            <span class="legend-normal">ै</span>
+          </div>
+          <div class="key keycap" id="key-e">
+            <span class="legend-shift">आ</span>
+            <span class="legend-normal">ा</span>
+          </div>
+          <div class="key keycap" id="key-r">
+            <span class="legend-shift">ई</span>
+            <span class="legend-normal">ी</span>
+          </div>
+          <div class="key keycap" id="key-t">
+            <span class="legend-shift">ऊ</span>
+            <span class="legend-normal">ू</span>
+          </div>
+          <div class="key keycap" id="key-y">
+            <span class="legend-shift">भ</span>
+            <span class="legend-normal">ब</span>
+          </div>
+          <div class="key keycap" id="key-u">
+            <span class="legend-shift">ङ</span>
+            <span class="legend-normal">ह</span>
+          </div>
+          <div class="key keycap" id="key-i">
+            <span class="legend-shift">घ</span>
+            <span class="legend-normal">ग</span>
+          </div>
+          <div class="key keycap" id="key-o">
+            <span class="legend-shift">ध</span>
+            <span class="legend-normal">द</span>
+          </div>
+          <div class="key keycap" id="key-p">
+            <span class="legend-shift">झ</span>
+            <span class="legend-normal">ज</span>
+          </div>
+          <div class="key keycap" id="key-bracketleft">
+            <span class="legend-shift">ढ</span>
+            <span class="legend-normal">ड</span>
+          </div>
+          <div class="key keycap" id="key-bracketright">
+            <span class="legend-shift">ञ</span>
+            <span class="legend-normal">़</span>
+          </div>
+          <div class="key keycap" id="key-backslash">
+            <span class="legend-shift">ऑ</span>
+            <span class="legend-normal">ॉ</span>
+          </div>
         </div>
 
         <!-- Row 3 -->
-        <div class="flex justify-between gap-1.5 w-full">
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-15 text-[10px]" id="key-capslock">caps</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-a">a</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-s">s</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-d">d</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-f">f</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-g">g</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-h">h</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-j">j</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-k">k</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-l">l</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-semicolon">;</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-quote">'</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-15 text-[10px]" id="key-enter">enter</div>
+        <div class="keyboard-row">
+          <div class="key keycap key-caps key-special" id="key-capslock">
+            <span>CapsLock</span>
+          </div>
+          <div class="key keycap" id="key-a">
+            <span class="legend-shift">ओ</span>
+            <span class="legend-normal">ो</span>
+          </div>
+          <div class="key keycap" id="key-s">
+            <span class="legend-shift">ए</span>
+            <span class="legend-normal">े</span>
+          </div>
+          <div class="key keycap" id="key-d">
+            <span class="legend-shift">अ</span>
+            <span class="legend-normal">्</span>
+          </div>
+          <div class="key keycap" id="key-f">
+            <span class="legend-shift">इ</span>
+            <span class="legend-normal">ि</span>
+          </div>
+          <div class="key keycap" id="key-g">
+            <span class="legend-shift">उ</span>
+            <span class="legend-normal">ु</span>
+          </div>
+          <div class="key keycap" id="key-h">
+            <span class="legend-shift">फ</span>
+            <span class="legend-normal">प</span>
+          </div>
+          <div class="key keycap" id="key-j">
+            <span class="legend-shift">ऱ</span>
+            <span class="legend-normal">र</span>
+          </div>
+          <div class="key keycap" id="key-k">
+            <span class="legend-shift">ख</span>
+            <span class="legend-normal">क</span>
+          </div>
+          <div class="key keycap" id="key-l">
+            <span class="legend-shift">थ</span>
+            <span class="legend-normal">त</span>
+          </div>
+          <div class="key keycap" id="key-semicolon">
+            <span class="legend-shift">छ</span>
+            <span class="legend-normal">च</span>
+          </div>
+          <div class="key keycap" id="key-quote">
+            <span class="legend-shift">ठ</span>
+            <span class="legend-normal">ट</span>
+          </div>
+          <div class="key keycap key-enter key-special" id="key-enter">
+            <span>↵ Enter</span>
+          </div>
         </div>
 
         <!-- Row 4 -->
-        <div class="flex justify-between gap-1.5 w-full">
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-18 text-[10px]" id="key-shiftleft">shift</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-z">z</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-x">x</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-c">c</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-v">v</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-b">b</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-n">n</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-m">m</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-comma">,</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-period">.</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-full" id="key-slash">/</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-18 text-[10px]" id="key-shiftright">shift</div>
+        <div class="keyboard-row">
+          <div class="key keycap key-shift key-special" id="key-shiftleft">
+            <span>⇧ Shift</span>
+          </div>
+          <div class="key keycap" id="key-z">
+            <span class="legend-shift">ऎ</span>
+            <span class="legend-normal">ॆ</span>
+          </div>
+          <div class="key keycap" id="key-x">
+            <span class="legend-shift">ँ</span>
+            <span class="legend-normal">ं</span>
+          </div>
+          <div class="key keycap" id="key-c">
+            <span class="legend-shift">ण</span>
+            <span class="legend-normal">म</span>
+          </div>
+          <div class="key keycap" id="key-v">
+            <span class="legend-shift">ऩ</span>
+            <span class="legend-normal">न</span>
+          </div>
+          <div class="key keycap" id="key-b">
+            <span class="legend-shift">ऴ</span>
+            <span class="legend-normal">व</span>
+          </div>
+          <div class="key keycap" id="key-n">
+            <span class="legend-shift">ळ</span>
+            <span class="legend-normal">ल</span>
+          </div>
+          <div class="key keycap" id="key-m">
+            <span class="legend-shift">श</span>
+            <span class="legend-normal">स</span>
+          </div>
+          <div class="key keycap" id="key-comma">
+            <span class="legend-shift">ष</span>
+            <span class="legend-normal">,</span>
+          </div>
+          <div class="key keycap" id="key-period">
+            <span class="legend-shift">।</span>
+            <span class="legend-normal">.</span>
+          </div>
+          <div class="key keycap" id="key-slash">
+            <span class="legend-shift">य़</span>
+            <span class="legend-normal">य</span>
+          </div>
+          <div class="key keycap key-shift key-special" id="key-shiftright">
+            <span>⇧ Shift</span>
+          </div>
         </div>
 
         <!-- Row 5 -->
-        <div class="flex gap-1.5 w-full">
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-15 text-[10px]">ctrl</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-12 text-[10px]">alt</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center grow" id="key-space">spacebar</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-12 text-[10px]">alt</div>
-          <div class="key rounded-sm border border-hairline bg-canvas-soft-2 text-body flex h-9.5 items-center justify-center w-15 text-[10px]">ctrl</div>
+        <div class="keyboard-row">
+          <div class="key keycap key-modifier" id="key-ctrlleft">Ctrl</div>
+          <div class="key keycap key-modifier" id="key-winleft">❖</div>
+          <div class="key keycap key-modifier" id="key-altleft">Alt</div>
+          <div class="key keycap key-space" id="key-space">Space</div>
+          <div class="key keycap key-modifier" id="key-altright">Alt</div>
+          <div class="key keycap key-modifier" id="key-winright">❖</div>
+          <div class="key keycap key-modifier" id="key-menu">▤</div>
+          <div class="key keycap key-modifier" id="key-ctrlright">Ctrl</div>
         </div>
       </div>
     </div>
@@ -910,28 +1067,29 @@
     Comma: 'key-comma',
     Period: 'key-period',
     Slash: 'key-slash',
-    ShiftRight: 'key-shiftright',
     Space: 'key-space',
-    Tab: 'key-tab'
+    Tab: 'key-tab',
+    ControlLeft: 'key-ctrlleft',
+    MetaLeft: 'key-winleft',
+    AltLeft: 'key-altleft',
+    AltRight: 'key-altright',
+    MetaRight: 'key-winright',
+    ContextMenu: 'key-menu',
+    ControlRight: 'key-ctrlright'
   };
 
   let isShiftActive = false;
 
   function updateVirtualKeyboard() {
     const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
-    
-    for (const [code, keyId] of Object.entries(CODE_TO_KEY_ID)) {
-      const elem = document.getElementById(keyId);
-      if (!elem) continue;
-      
-      if (code in INSCRIPT_MAP) {
-        if (isHindiMode) {
-          const map = INSCRIPT_MAP[code];
-          elem.innerText = isShiftActive ? map.shift : map.normal;
-        } else {
-          elem.innerText = QWERTY_LABELS[code];
-        }
+    if (isHindiMode) {
+      if (isShiftActive) {
+        keyboardContainer.classList.add('shift-active');
+      } else {
+        keyboardContainer.classList.remove('shift-active');
       }
+    } else {
+      keyboardContainer.classList.remove('shift-active');
     }
   }
 
@@ -1082,6 +1240,14 @@
     } else {
       hindiTip.classList.add('hidden');
       hindiTip.classList.remove('flex');
+    }
+
+    // Auto show/hide virtual keyboard based on active language
+    const isHindiOrSanskrit = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    if (isHindiOrSanskrit) {
+      keyboardContainer.classList.remove('hidden');
+    } else {
+      keyboardContainer.classList.add('hidden');
     }
 
     // Autofocus input so they can press Enter immediately
@@ -2050,5 +2216,82 @@
   }
   .animate-shake {
     animation: shake 0.15s ease-in-out;
+  }
+
+  /* Physical Keyboard Styling (Light Scheme matching image) */
+  .keyboard-row {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  .keycap {
+    background-color: var(--color-canvas, #ffffff) !important;
+    border: 1px solid var(--color-hairline, #e2e2e2) !important;
+    border-bottom: 3px solid #b5b5b5 !important; /* Bevel shadow bottom */
+    color: var(--color-ink, #2d2d2d) !important;
+    height: 48px !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 3px 6px !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    flex: 1 1 0% !important;
+    transition: all 0.05s ease !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.04) !important;
+  }
+  .keycap .legend-shift {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #4b5563 !important;
+    align-self: flex-start !important;
+    line-height: 1.1 !important;
+  }
+  .keycap .legend-normal {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: #111827 !important;
+    align-self: flex-end !important;
+    line-height: 1.1 !important;
+  }
+  /* Highlight Shift character when Shift is pressed */
+  .shift-active .keycap .legend-shift {
+    color: var(--color-link, #3b82f6) !important;
+    font-weight: 700 !important;
+    transform: scale(1.1) !important;
+  }
+  .shift-active .keycap .legend-normal {
+    opacity: 0.35 !important;
+  }
+  /* Special / Modifier keys centered style */
+  .keycap.key-special, .keycap.key-modifier {
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: #4b5563 !important;
+  }
+  /* Proportional Width Layouts */
+  .key-backspace { flex-grow: 1.7 !important; }
+  .key-tab { flex-grow: 1.4 !important; }
+  .key-caps { flex-grow: 1.6 !important; }
+  .key-enter { flex-grow: 1.7 !important; }
+  .key-shift { flex-grow: 2.1 !important; }
+  .key-space { flex-grow: 8 !important; font-size: 12px !important; color: #4b5563 !important; }
+  .key-modifier { flex-grow: 1.1 !important; }
+
+  /* Interactive active depression visual state */
+  .keycap.active {
+    background-color: #f3f4f6 !important;
+    border-color: #9ca3af !important;
+    border-bottom-width: 1px !important;
+    transform: translateY(2px) !important;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06) !important;
   }
 </style>

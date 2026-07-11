@@ -206,8 +206,8 @@
         </div>
       </div>
 
-      <!-- Quick Reset Button -->
-      <div class="relative flex justify-center mt-6 z-10 distraction">
+      <!-- Quick Actions (Reset & Keyboard Guide) -->
+      <div class="relative flex items-center justify-center gap-3 mt-6 z-10 distraction">
         <button 
           id="reset-btn"
           title="Restart Test (Esc)"
@@ -216,6 +216,25 @@
           <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3m0 0l3 3m-3-3v8"></path>
           </svg>
+        </button>
+
+        <button
+          id="toggle-keyboard-btn"
+          title="Toggle Virtual Keyboard Guide"
+          class="flex h-8 items-center gap-1.5 rounded-sm border border-hairline px-3 text-xs font-mono text-mute hover:text-ink hover:bg-canvas-soft transition-colors cursor-pointer"
+        >
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+            <line x1="6" y1="8" x2="6" y2="8" />
+            <line x1="10" y1="8" x2="10" y2="8" />
+            <line x1="14" y1="8" x2="14" y2="8" />
+            <line x1="18" y1="8" x2="18" y2="8" />
+            <line x1="6" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="18" y2="12" />
+            <line x1="7" y1="16" x2="17" y2="16" />
+            <line x1="10" y1="12" x2="14" y2="12" />
+          </svg>
+          <span>Show Virtual Keyboard</span>
         </button>
       </div>
 
@@ -238,7 +257,7 @@
 
     <!-- Virtual Keyboard Card -->
     <!-- Virtual Keyboard Card -->
-    <div id="keyboard-container" class="hidden rounded-lg border border-hairline bg-canvas p-6 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all">
+    <div id="keyboard-container" class="hidden rounded-lg border border-hairline bg-canvas p-3 sm:p-6 shadow-[0_1px_2px_rgba(0,0,0,0.05)] transition-all">
       <div class="flex items-center justify-between mb-4">
         <span class="font-mono text-[10px] text-mute uppercase tracking-wider">virtual keyboard map</span>
         <div class="flex items-center gap-4 text-[10px] font-mono text-mute">
@@ -248,7 +267,7 @@
       </div>
 
       <!-- The InScript Double-Legend Layout -->
-      <div class="grid gap-1.5 max-w-4xl mx-auto font-mono text-xs select-none">
+      <div class="grid gap-1.5 w-full max-w-4xl mx-auto font-mono text-xs select-none">
         <!-- Row 1 -->
         <div class="keyboard-row">
           <div class="key keycap" id="key-backquote">
@@ -1118,6 +1137,7 @@
   let currentLanguage = 'javascript'; // for code mode
   let isStrictErrorMode = false; // false (free mode) | true (strict mode)
   let isTestReady = false; // true when user pressed Enter or clicked overlay to focus
+  let isKeyboardOpen = false; // closed/hidden by default
   
   let targetText = '';
   let lastLineTop = 0;
@@ -1259,8 +1279,8 @@
       hindiTip.classList.remove('flex');
     }
 
-    // Auto show virtual keyboard based on active language
-    keyboardContainer.classList.remove('hidden');
+    // Sync virtual keyboard visibility based on state
+    syncKeyboardVisibility();
 
     // Autofocus input so they can press Enter immediately
     setTimeout(() => {
@@ -1957,9 +1977,71 @@
     }
   });
 
+  // Synchronize virtual keyboard display, labels and active styles
+  function syncKeyboardVisibility() {
+    const keyboardToggleBtn = document.getElementById('toggle-keyboard-btn');
+    const headerKeyboardToggleBtn = document.getElementById('keyboard-toggle');
+    
+    if (isKeyboardOpen) {
+      keyboardContainer.classList.remove('hidden');
+      if (keyboardToggleBtn) {
+        keyboardToggleBtn.innerHTML = `
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+            <line x1="6" y1="8" x2="6" y2="8" />
+            <line x1="10" y1="8" x2="10" y2="8" />
+            <line x1="14" y1="8" x2="14" y2="8" />
+            <line x1="18" y1="8" x2="18" y2="8" />
+            <line x1="6" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="18" y2="12" />
+            <line x1="7" y1="16" x2="17" y2="16" />
+            <line x1="10" y1="12" x2="14" y2="12" />
+          </svg>
+          <span>Hide Virtual Keyboard</span>
+        `;
+        keyboardToggleBtn.classList.add('bg-canvas-soft-2', 'text-ink');
+        keyboardToggleBtn.classList.remove('text-mute');
+      }
+      if (headerKeyboardToggleBtn) {
+        headerKeyboardToggleBtn.classList.add('bg-canvas-soft-2', 'text-ink');
+        headerKeyboardToggleBtn.classList.remove('text-body');
+      }
+    } else {
+      keyboardContainer.classList.add('hidden');
+      if (keyboardToggleBtn) {
+        keyboardToggleBtn.innerHTML = `
+          <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2" />
+            <line x1="6" y1="8" x2="6" y2="8" />
+            <line x1="10" y1="8" x2="10" y2="8" />
+            <line x1="14" y1="8" x2="14" y2="8" />
+            <line x1="18" y1="8" x2="18" y2="8" />
+            <line x1="6" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="18" y2="12" />
+            <line x1="7" y1="16" x2="17" y2="16" />
+            <line x1="10" y1="12" x2="14" y2="12" />
+          </svg>
+          <span>Show Virtual Keyboard</span>
+        `;
+        keyboardToggleBtn.classList.remove('bg-canvas-soft-2', 'text-ink');
+        keyboardToggleBtn.classList.add('text-mute');
+      }
+      if (headerKeyboardToggleBtn) {
+        headerKeyboardToggleBtn.classList.remove('bg-canvas-soft-2', 'text-ink');
+        headerKeyboardToggleBtn.classList.add('text-body');
+      }
+    }
+  }
+
   // Header and buttons custom triggers listeners
   document.addEventListener('toggle-keyboard', () => {
-    keyboardContainer.classList.toggle('hidden');
+    isKeyboardOpen = !isKeyboardOpen;
+    syncKeyboardVisibility();
+  });
+
+  // Attach click listener to toggle-keyboard-btn
+  document.getElementById('toggle-keyboard-btn')?.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('toggle-keyboard'));
   });
 
   document.addEventListener('reset-typing-test', () => {
@@ -2317,5 +2399,79 @@
     height: 100% !important;
     width: 100% !important;
     text-align: center !important;
+  }
+
+  /* Mobile Responsive Keyboard Rules */
+  #keyboard-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  @media (max-width: 768px) {
+    #keyboard-container {
+      padding: 12px !important;
+    }
+    .keyboard-row {
+      gap: 3px !important;
+      margin-bottom: 3px !important;
+    }
+    .keycap {
+      height: 38px !important;
+      padding: 2px 4px !important;
+      border-radius: 4px !important;
+      border-bottom-width: 2px !important;
+    }
+    .keycap .legend-shift {
+      font-size: 8px !important;
+    }
+    .keycap .legend-normal {
+      font-size: 10px !important;
+    }
+    .keycap .legend-english {
+      font-size: 10px !important;
+    }
+    .keycap.key-special, .keycap.key-modifier {
+      font-size: 9px !important;
+    }
+    .key-space {
+      font-size: 10px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #keyboard-container {
+      padding: 8px !important;
+    }
+    .keyboard-row {
+      gap: 2px !important;
+      margin-bottom: 2px !important;
+    }
+    .keycap {
+      height: 28px !important;
+      padding: 1px 2px !important;
+      border-radius: 3px !important;
+      border-bottom-width: 1.5px !important;
+    }
+    .keycap .legend-shift {
+      font-size: 6.5px !important;
+      font-weight: 400 !important;
+    }
+    .keycap .legend-normal {
+      font-size: 8.5px !important;
+      font-weight: 500 !important;
+    }
+    .keycap .legend-english {
+      font-size: 8.5px !important;
+      font-weight: 500 !important;
+    }
+    .keycap.key-special, .keycap.key-modifier {
+      font-size: 7.5px !important;
+      font-weight: 400 !important;
+    }
+    .key-space {
+      font-size: 8.5px !important;
+    }
   }
 </style>

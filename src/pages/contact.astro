@@ -2,6 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+
+// Pull the access key securely from your environment variables
+const contactKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 ---
 
 <Layout title="Contact Us - Typing Speed Practice" description="Have questions, suggestions, or feature requests for typing speed practice? Contact us here through our clean messaging interface.">
@@ -17,13 +20,21 @@ import Footer from '../components/Footer.astro';
           <p class="text-xs text-mute font-mono mt-1">SEND US A MESSAGE OR SHARE FEEDBACK</p>
         </div>
 
-        <!-- Contact Form -->
-        <form class="space-y-5" onsubmit="event.preventDefault(); alert('Thank you for reaching out! Form submissions are simulated for safety.');">
+        <!-- Contact Form targeted to Web3Forms API -->
+        <form action="https://api.web3forms.com/submit" method="POST" class="space-y-5">
+          
+          <!-- Web3Forms Config Parameters -->
+          <input type="hidden" name="access_key" value={contactKey}>
+          
+          <!-- Anti-Bot Honeypot: Invisible to humans, filled out by bots. If filled, Web3Forms drops the email -->
+          <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
           <div class="space-y-1.5">
             <label for="contact-name" class="block text-[10px] font-mono uppercase tracking-wider text-mute">Your Name</label>
             <input 
               type="text" 
               id="contact-name" 
+              name="name"
               required
               placeholder="Steve Jobs"
               class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-xs font-sans text-ink placeholder:text-mute focus:border-link focus:outline-none transition-colors"
@@ -35,6 +46,7 @@ import Footer from '../components/Footer.astro';
             <input 
               type="email" 
               id="contact-email" 
+              name="email"
               required
               placeholder="steve@apple.com"
               class="w-full rounded-sm border border-hairline bg-canvas px-3 py-2 text-xs font-sans text-ink placeholder:text-mute focus:border-link focus:outline-none transition-colors"
@@ -45,6 +57,7 @@ import Footer from '../components/Footer.astro';
             <label for="contact-msg" class="block text-[10px] font-mono uppercase tracking-wider text-mute">Your Message</label>
             <textarea 
               id="contact-msg" 
+              name="message"
               rows="5"
               required
               placeholder="What features or languages would you like to see added?"
@@ -59,8 +72,6 @@ import Footer from '../components/Footer.astro';
             Send Message
           </button>
         </form>
-
-
 
       </div>
     </main>

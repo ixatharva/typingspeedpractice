@@ -67,7 +67,7 @@
                 aria-expanded="false"
                 aria-haspopup="true"
               >
-                <span id="current-lang-label">english</span>
+                <span id="current-lang-label">english (us)</span>
                 <svg class="h-3 w-3 text-mute" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
                 </svg>
@@ -78,11 +78,13 @@
                 id="lang-dropdown-menu" 
                 class="hidden absolute left-0 mt-1.5 w-28 rounded-sm border border-hairline bg-canvas shadow-lg z-30 font-mono text-xs divide-y divide-hairline transition-all duration-100"
               >
-                <button data-option-lang="english" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer bg-canvas-soft-2 font-semibold">english</button>
-                <button data-option-lang="hindi" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">hindi</button>
-                <button data-option-lang="sanskrit" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">sanskrit</button>
+                <button data-option-lang="english" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer bg-canvas-soft-2 font-semibold">english (us)</button>
+                <button data-option-lang="german" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">german</button>
+                <button data-option-lang="portuguese" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">portuguese</button>
+                <button data-option-lang="italian" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">italian</button>
                 <button data-option-lang="spanish" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">spanish</button>
                 <button data-option-lang="french" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">french</button>
+                <button data-option-lang="hindi" class="lang-opt-btn w-full text-left px-3 py-1.5 hover:bg-canvas-soft text-body hover:text-ink cursor-pointer">hindi</button>
               </div>
             </div>
           </div>
@@ -974,7 +976,14 @@
     ',': 'key-comma', '<': 'key-comma',
     '.': 'key-period', '>': 'key-period',
     '/': 'key-slash', '?': 'key-slash',
-    ' ': 'key-space'
+    ' ': 'key-space',
+    // Fallback mappings for European accents and special characters (German, French, Spanish, Portuguese, Italian)
+    'ä': 'key-a', 'á': 'key-a', 'à': 'key-a', 'â': 'key-a', 'ã': 'key-a',
+    'é': 'key-e', 'è': 'key-e', 'ê': 'key-e', 'ë': 'key-e',
+    'í': 'key-i', 'ì': 'key-i', 'î': 'key-i', 'ï': 'key-i',
+    'ó': 'key-o', 'ò': 'key-o', 'ô': 'key-o', 'õ': 'key-o', 'ö': 'key-o',
+    'ú': 'key-u', 'ù': 'key-u', 'û': 'key-u', 'ü': 'key-u',
+    'ç': 'key-c', 'ß': 'key-s'
   };
 
   // Hindi InScript mapping constants
@@ -1100,7 +1109,7 @@
   let isShiftActive = false;
 
   function updateVirtualKeyboard() {
-    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    const isHindiMode = currentProseLanguage === 'hindi' && currentMode !== 'code';
     if (isHindiMode) {
       if (isShiftActive) {
         keyboardContainer.classList.add('shift-active');
@@ -1131,7 +1140,7 @@
 
   // State Management
   let currentMode = 'time'; // 'time' | 'words' | 'code'
-  let currentProseLanguage = 'english'; // 'english' | 'hindi' | 'sanskrit' | 'spanish' | 'french'
+  let currentProseLanguage = 'english'; // 'english' | 'hindi' | 'german' | 'portuguese' | 'italian' | 'spanish' | 'french'
   let currentTimeLimit = 60; // seconds
   let currentWordsCount = 25; // count
   let currentLanguage = 'javascript'; // for code mode
@@ -1441,7 +1450,7 @@
     }
     
     let targetKeyId = null;
-    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    const isHindiMode = currentProseLanguage === 'hindi' && currentMode !== 'code';
     
     if (isHindiMode) {
       // Find key code in INSCRIPT_MAP
@@ -1503,6 +1512,8 @@
     if (!isTestReady) {
       if (e.key === 'Enter') {
         startTestFocus();
+      } else if (!e.ctrlKey && !e.altKey && !e.metaKey && (e.key.length === 1 || e.key === 'Backspace')) {
+        e.preventDefault();
       }
       return;
     }
@@ -1554,7 +1565,7 @@
     }
 
     // Emulate Hindi InScript keyboard if typing with normal English keyboard settings
-    const isHindiMode = (currentProseLanguage === 'hindi' || currentProseLanguage === 'sanskrit') && currentMode !== 'code';
+    const isHindiMode = currentProseLanguage === 'hindi' && currentMode !== 'code';
     if (isHindiMode && e.key !== 'Process') {
       // Pass standard modifier shortcuts and special keys
       if (e.ctrlKey || e.altKey || e.metaKey || e.key.length > 1) return;
@@ -2243,7 +2254,7 @@
       const lang = btn.getAttribute('data-option-lang');
       if (lang) {
         currentProseLanguage = lang;
-        currentLangLabel.innerText = lang;
+        currentLangLabel.innerText = lang === 'english' ? 'english (us)' : lang;
         
         // Highlight active dropdown choice
         langOptButtons.forEach(b => {

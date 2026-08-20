@@ -1,4 +1,4 @@
-# ⌨️ Stark Typing Speed Practice
+# ⌨️ Typing Speed Practice
 
 An elegant, developer-centric, and distraction-free typing speed testing web application. The interface draws inspiration from Vercel's stark design language—pairing a clean black-and-ink layout on a near-white canvas with vibrant mesh gradients, custom geometric typography, and smooth micro-animations.
 
